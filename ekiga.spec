@@ -4,7 +4,7 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.1.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		Video
 BuildRequires:	libgnomeui2-devel >= 2.0.0
@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome 
 for omf in %buildroot%_datadir/omf/*/{*-??,*-??_??}.omf;do
 echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed s!%buildroot!!)" >> %name.lang
 done
