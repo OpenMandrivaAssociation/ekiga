@@ -1,9 +1,9 @@
-%define ptlib_version 2.5.2
-%define opal_version 3.5.2
+%define ptlib_version 2.6.0
+%define opal_version 3.6.0
 
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
-Version:	3.1.0
+Version:	3.1.2
 Release:	%mkrel 1
 License:	GPLv2+
 Group:		Video
@@ -70,9 +70,6 @@ for omf in %buildroot%_datadir/omf/*/{*-??,*-??_??}.omf;do
 echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed s!%buildroot!!)" >> %name.lang
 done
 
-#gw http://bugzilla.gnome.org/show_bug.cgi?id=566773
-rm -v $RPM_BUILD_ROOT%{_datadir}/applications/ekiga.desktop.in.in
-install -m 644 ekiga.desktop $RPM_BUILD_ROOT%{_datadir}/applications/ekiga.desktop
 sed -i -e 's,^Exec=ekiga,Exec=soundwrapper %{_bindir}/ekiga,g' $RPM_BUILD_ROOT%{_datadir}/applications/ekiga.desktop
 
 desktop-file-install --vendor="" \
