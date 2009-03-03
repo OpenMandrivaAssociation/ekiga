@@ -145,7 +145,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/sounds/*
-%{_datadir}/gnome/help/ekiga
 %_datadir/icons/hicolor/*/apps/*
 %{_mandir}/*/*
 %{_sysconfdir}/gconf/schemas/*
