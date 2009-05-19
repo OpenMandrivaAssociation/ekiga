@@ -1,9 +1,9 @@
-%define ptlib_version 2.6.1
-%define opal_version 3.6.1
+%define ptlib_version 2.6.2
+%define opal_version 3.6.2
 
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
-Version:	3.2.0
+Version:	3.2.1
 Release:	%mkrel 1
 License:	GPLv2+
 Group:		Video
