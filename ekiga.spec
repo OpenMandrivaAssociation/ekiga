@@ -137,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc README COPYING FAQ AUTHORS INSTALL TODO
+%doc README NEWS FAQ AUTHORS TODO
 %{_bindir}/*
 %dir %{_datadir}/omf/*
 %{_datadir}/dbus-1/services/org.ekiga*
