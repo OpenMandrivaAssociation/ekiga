@@ -1,6 +1,14 @@
 %define ptlib_version 2.6.4
 %define opal_version 3.6.4
 
+%define kde_support 0
+%{?_kde_support: %{expand: %%global kde_support 1}}
+
+%if %kde_support
+%define kde_snapshot svn973768
+%endif
+
+
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.2.5
@@ -25,6 +33,9 @@ BuildRequires:  libnotify-devel
 BuildRequires:  automake1.9
 BuildRequires:  gnome-doc-utils >= 0.3.2 libxslt-proc
 BuildRequires:  desktop-file-utils
+%if %kde_support
+BuildRequires:  kdelibs4-devel
+%endif
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/%{name}-%{version}.tar.bz2
 Patch: ekiga-3.1.0-format-string.patch
 Obsoletes:	gnomemeeting
@@ -51,10 +62,16 @@ It used to be called GnomeMeeting
 %patch -p1
 
 %build
-
+%if %kde_support
+  QTDIR="/usr/lib/qt4" ; export QTDIR ; 
+  PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
+%endif
 %configure2_5x	\
 %if %mdkver < 200610
 		--disable-avahi \
+%endif
+%if %kde_support
+        --enable-kde \
 %endif
 		--disable-schemas-install --enable-dbus
 %make 
