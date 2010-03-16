@@ -7,7 +7,7 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.2.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		Video
 BuildRequires:	libgnomeui2-devel >= 2.0.0
