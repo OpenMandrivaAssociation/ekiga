@@ -1,4 +1,3 @@
-%define ptlib_version 2.6.7
 %define opal_version 3.6.8
 
 %define kde_support 0
@@ -12,11 +11,9 @@ License:	GPLv2+
 Group:		Video
 BuildRequires:	libgnomeui2-devel >= 2.0.0
 BuildRequires:	opal3-devel >= %{opal_version}
-Buildrequires:	ptlib-devel >= %{ptlib_version} 
-%if %{mdkver} >= 200610
+Buildrequires:	ptlib-devel
 BuildRequires:  avahi-glib-devel
 BuildRequires:  avahi-client-devel
-%endif
 BuildRequires:	openldap-devel
 BuildRequires:  libsigc++2.0-devel
 BuildRequires:  libxv-devel
@@ -25,7 +22,7 @@ BuildRequires:  intltool
 BuildRequires:  evolution-data-server-devel
 BuildRequires:  dbus-glib-devel
 BuildRequires:  libnotify-devel
-BuildRequires:  automake1.9
+BuildRequires:  automake
 BuildRequires:  gnome-doc-utils >= 0.3.2 libxslt-proc
 BuildRequires:  desktop-file-utils
 %if %kde_support
@@ -39,13 +36,9 @@ Provides:	gnomemeeting
 URL:		http://www.ekiga.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Conflicts:	dynamic <= 0.3-2mdk
-Requires(post)  : scrollkeeper >= 0.3
-Requires(postun): scrollkeeper >= 0.3
 Requires:	soundwrapper
-Requires:	opal3 >= %{opal_version}
-%if %{mdkver} >= 200800
+Requires:	opal3
 Suggests:	yelp
-%endif
 
 %description
 Ekiga is a tool to communicate with video and audio over the internet.
@@ -62,13 +55,10 @@ It used to be called GnomeMeeting
   PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
 %endif
 %configure2_5x	\
-%if %mdkver < 200610
-		--disable-avahi \
-%endif
 %if %kde_support
         --enable-kde \
 %endif
-		--disable-schemas-install --enable-dbus
+	--disable-schemas-install --enable-dbus
 %make 
 
 %install
@@ -86,7 +76,6 @@ sed -i -e 's,^Exec=ekiga,Exec=soundwrapper %{_bindir}/ekiga,g' $RPM_BUILD_ROOT%{
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
-  --add-category="X-MandrivaLinux-Internet-VideoConference" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
