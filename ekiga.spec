@@ -29,7 +29,9 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  kdelibs4-devel
 %endif
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/%{name}-%{version}.tar.bz2
-Patch: ekiga-3.1.0-format-string.patch
+Patch0: ekiga-3.1.0-format-string.patch
+Patch1: ekiga-3.2.7-notify-0.7.patch
+Patch2: ekiga-3.2.7-gtkflags.patch
 Obsoletes:	gnomemeeting
 Provides:	gnomemeeting
 
@@ -47,7 +49,7 @@ It used to be called GnomeMeeting
 
 %prep
 %setup -q
-%patch -p1
+%apply_patches
 
 %build
 %if %kde_support
