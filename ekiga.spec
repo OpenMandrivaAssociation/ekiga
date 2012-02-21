@@ -7,7 +7,7 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.3.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		Video
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/3.3/%{name}-%{version}.tar.xz
