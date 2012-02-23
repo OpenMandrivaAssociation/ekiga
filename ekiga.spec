@@ -1,4 +1,3 @@
-%define ptlib_version 2.10.2
 %define opal_version 3.10.2
 
 %define kde_support 0
@@ -7,41 +6,40 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.3.2
-Release:	%mkrel 2
+Release:	2
 License:	GPLv2+
 Group:		Video
+URL:		http://www.ekiga.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/3.3/%{name}-%{version}.tar.xz
 Patch0:		ekiga-3.3.1-format-string.patch
-URL:		http://www.ekiga.org
-BuildRequires:	libgnomeui2-devel >= 2.0.0
-BuildRequires:	libsigc++2.0-devel
-BuildRequires:	evolution-data-server-devel
-BuildRequires:	libnotify-devel
-BuildRequires:	libxv-devel
-BuildRequires:	dbus-glib-devel
-BuildRequires:	avahi-client-devel
-BuildRequires:	avahi-glib-devel
-Buildrequires:	ptlib-devel >= %{ptlib_version}
-BuildRequires:	opal3-devel >= %{opal_version}
-BuildRequires:	openldap-devel
-BuildRequires:	boost-devel
-BuildRequires:	scrollkeeper
-BuildRequires:	intltool
-BuildRequires:	automake
+
+BuildRequires:	desktop-file-utils
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.3.2
-BuildRequires:	libxslt-proc
-BuildRequires:	desktop-file-utils
+BuildRequires:	intltool
+BuildRequires:	scrollkeeper
+BuildRequires:	xsltproc
+
+BuildRequires:	pkgconfig(avahi-client)
+BuildRequires:	pkgconfig(avahi-glib)
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(libebook-1.2)
+BuildRequires:	pkgconfig(libgnomeui-2.0)
+BuildRequires:	pkgconfig(libnotify)
+BuildRequires:	pkgconfig(opal) >= %{opal_version}
+Buildrequires:	pkgconfig(ptlib) >= 2.10.2
+BuildRequires:	pkgconfig(sigc++-2.0)
+BuildRequires:	pkgconfig(xv)
+BuildRequires:	openldap-devel
+BuildRequires:	boost-devel
 %if %kde_support
 BuildRequires:	kdelibs4-devel
 %endif
-Obsoletes:	gnomemeeting
-Provides:	gnomemeeting
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Conflicts:	dynamic <= 0.3-2mdk
+%rename		gnomemeeting
+
 Requires(post):		scrollkeeper >= 0.3
 Requires(postun):	scrollkeeper >= 0.3
-Requires:		opal3 >= %{opal_version}
+Requires:	opal3 >= %{opal_version}
 Suggests:	yelp
 
 %description
@@ -63,14 +61,14 @@ NOCONFIGURE=yes gnome-autogen.sh
 %if %kde_support
 	--enable-kde \
 %endif
-	--disable-schemas-install --enable-dbus
+	--disable-schemas-install \
+	--enable-dbus
+
 %make 
 
 %install
 rm -rf %{buildroot}
-
 %makeinstall_std
-
 
 %find_lang %{name} --with-gnome 
 for omf in %{buildroot}%{_datadir}/omf/*/{*-??,*-??_??}.omf;do
@@ -80,8 +78,8 @@ done
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
-  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
-
+  --dir %{buildroot}%{_datadir}/applications \
+  %{buildroot}%{_datadir}/applications/*
 
 %define launchers %{_sysconfdir}/dynamic/launchers/webcam
 # dynamic support
@@ -98,21 +96,9 @@ Type=Application
 StartupNotify=true
 EOF
 
-
 rm -rf %{buildroot}/var/lib/scrollkeeper
 
 %define schemas ekiga
-
-%post
-%if %mdkversion < 200900
-%post_install_gconf_schemas %{schemas}
-%{update_menus}
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%update_scrollkeeper
-%endif
 
 %preun
 if [ -r %{_sysconfdir}/gconf/schemas/gnomemeeting.schemas -a -x %{_bindir}/gconftool-2 ]; then
@@ -123,28 +109,18 @@ fi
 %preun_uninstall_gconf_schemas %{schemas}
 
 %postun
-%if %mdkversion < 200900
-%{clean_menus}
-%{clean_scrollkeeper}
-%clean_icon_cache hicolor
-%endif
-
 if [ "$1" = "0" ]; then
   update-alternatives --remove webcam.kde.dynamic %{launchers}/%{name}.desktop
   update-alternatives --remove webcam.gnome.dynamic %{launchers}/%{name}.desktop
 fi
 
-%clean
-rm -rf %{buildroot}
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc README NEWS FAQ AUTHORS TODO
 %{_bindir}/*
 %{_libdir}/%{name}
 %dir %{_datadir}/omf/*
 %{_datadir}/dbus-1/services/org.ekiga*
-%{_datadir}/omf/*/*-C.omf
+#{_datadir}/omf/*/*-C.omf
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/sounds/*
