@@ -118,9 +118,7 @@ fi
 %doc README NEWS FAQ AUTHORS TODO
 %{_bindir}/*
 %{_libdir}/%{name}
-%dir %{_datadir}/omf/*
 %{_datadir}/dbus-1/services/org.ekiga*
-#{_datadir}/omf/*/*-C.omf
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/sounds/*
