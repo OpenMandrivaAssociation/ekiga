@@ -6,7 +6,7 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	3.3.2
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Video
 URL:		http://www.ekiga.org
