@@ -1,33 +1,37 @@
-%define opal_version 3.10.2
+%define opal_version 3.10.9
 
 %define kde_support 0
 %{?_kde_support: %{expand: %%global kde_support 1}}
 
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
-Version:	3.3.2
-Release:	3
+Version:	4.0.0
+Release:	1
 License:	GPLv2+
 Group:		Video
 URL:		http://www.ekiga.org
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/3.3/%{name}-%{version}.tar.xz
-Patch0:		ekiga-3.3.1-format-string.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/4.0/%{name}-%{version}.tar.xz
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnome-common
-BuildRequires:	gnome-doc-utils >= 0.3.2
 BuildRequires:	intltool
 BuildRequires:	scrollkeeper
 BuildRequires:	xsltproc
+BuildRequires:	gettext-devel
 
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
+BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gnome-doc-utils)
+BuildRequires:	pkgconfig(gnome-icon-theme)
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(libebook-1.2)
 BuildRequires:	pkgconfig(libgnomeui-2.0)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(opal) >= %{opal_version}
-Buildrequires:	pkgconfig(ptlib) >= 2.10.2
+Buildrequires:	pkgconfig(ptlib) >= 2.10.9
 BuildRequires:	pkgconfig(sigc++-2.0)
 BuildRequires:	pkgconfig(xv)
 BuildRequires:	openldap-devel
@@ -39,6 +43,7 @@ BuildRequires:	kdelibs4-devel
 
 Requires(post):		scrollkeeper >= 0.3
 Requires(postun):	scrollkeeper >= 0.3
+Requires:	pkgconfig(gnome-icon-theme)
 Requires:	opal3 >= %{opal_version}
 Suggests:	yelp
 
@@ -49,7 +54,6 @@ It used to be called GnomeMeeting
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %if %kde_support
@@ -64,13 +68,12 @@ NOCONFIGURE=yes gnome-autogen.sh
 	--disable-schemas-install \
 	--enable-dbus
 
-%make 
+make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
-%find_lang %{name} --with-gnome 
+%find_lang %{name} --with-gnome
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -123,3 +126,5 @@ fi
 %{_mandir}/*/*
 %{_sysconfdir}/gconf/schemas/*
 %config(noreplace) %{launchers}/*.desktop
+
+
