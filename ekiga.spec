@@ -1,4 +1,4 @@
-%define opal_version 3.10.9
+%define opal_version 3.10.10
 
 %define kde_support 0
 %{?_kde_support: %{expand: %%global kde_support 1}}
