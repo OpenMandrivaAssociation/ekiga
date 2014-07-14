@@ -63,6 +63,7 @@ NOCONFIGURE=yes gnome-autogen.sh
 	--enable-kde \
 %endif
 	--disable-schemas-install \
+    --disable-eds \
 	--enable-dbus
 
 make
