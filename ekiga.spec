@@ -28,7 +28,6 @@ BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	pkgconfig(gnome-icon-theme)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	pkgconfig(libebook-1.2)
 BuildRequires:	pkgconfig(libgnomeui-2.0)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(opal) >= %{opal_version}
