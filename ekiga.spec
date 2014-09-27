@@ -6,7 +6,7 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	4.0.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Video
 URL:		http://www.ekiga.org
@@ -23,12 +23,10 @@ BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dbus-glib-1)
-BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	pkgconfig(gnome-icon-theme)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(libebook-1.2)
-BuildRequires:	pkgconfig(libgnomeui-2.0)
 BuildRequires:	pkgconfig(libnotify)
 BuildRequires:	pkgconfig(opal) >= %{opal_version}
 Buildrequires:	pkgconfig(ptlib) >= 2.10.9
@@ -66,7 +64,8 @@ NOCONFIGURE=yes gnome-autogen.sh
 	--enable-kde \
 %endif
 	--disable-schemas-install \
-	--enable-dbus
+	--enable-dbus \
+	--disable-gdu
 
 make
 
