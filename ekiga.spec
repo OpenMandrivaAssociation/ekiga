@@ -6,10 +6,10 @@
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	4.0.1
-Release:	2
+Release:	7
 License:	GPLv2+
 Group:		Video
-URL:		http://www.ekiga.org
+Url:		http://www.ekiga.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/4.0/%{name}-%{version}.tar.xz
 
 BuildRequires:	desktop-file-utils
@@ -17,8 +17,9 @@ BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	scrollkeeper
 BuildRequires:	xsltproc
+BuildRequires:	boost-devel
 BuildRequires:	gettext-devel
-
+BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(dbus-1)
@@ -32,16 +33,13 @@ BuildRequires:	pkgconfig(opal) >= %{opal_version}
 Buildrequires:	pkgconfig(ptlib) >= 2.10.9
 BuildRequires:	pkgconfig(sigc++-2.0)
 BuildRequires:	pkgconfig(xv)
-BuildRequires:	openldap-devel
-BuildRequires:	boost-devel
 %if %kde_support
 BuildRequires:	kdelibs4-devel
 %endif
 %rename		gnomemeeting
 
-Requires(post):		scrollkeeper >= 0.3
-Requires(postun):	scrollkeeper >= 0.3
-Requires:	pkgconfig(gnome-icon-theme)
+Requires(post,postun):	scrollkeeper >= 0.3
+Requires:	gnome-icon-theme
 Requires:	opal3 >= %{opal_version}
 Suggests:	yelp
 
@@ -55,8 +53,8 @@ It used to be called GnomeMeeting
 
 %build
 %if %kde_support
-  QTDIR="/usr/lib/qt4" ; export QTDIR ; 
-  PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
+QTDIR="/usr/lib/qt4" ; export QTDIR ; 
+PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
 %endif
 NOCONFIGURE=yes gnome-autogen.sh
 %configure2_5x	\
@@ -75,10 +73,10 @@ make
 %find_lang %{name} --with-gnome
 
 desktop-file-install --vendor="" \
-  --remove-category="Application" \
-  --add-category="X-MandrivaLinux-CrossDesktop" \
-  --dir %{buildroot}%{_datadir}/applications \
-  %{buildroot}%{_datadir}/applications/*
+	--remove-category="Application" \
+	--add-category="X-MandrivaLinux-CrossDesktop" \
+	--dir %{buildroot}%{_datadir}/applications \
+	%{buildroot}%{_datadir}/applications/*
 
 %define launchers %{_sysconfdir}/dynamic/launchers/webcam
 # dynamic support
@@ -115,15 +113,14 @@ fi
 
 %files -f %{name}.lang
 %doc README NEWS FAQ AUTHORS TODO
+%{_sysconfdir}/gconf/schemas/*
+%config(noreplace) %{launchers}/*.desktop
 %{_bindir}/*
 %{_libdir}/%{name}
 %{_datadir}/dbus-1/services/org.ekiga*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/sounds/*
-%{_datadir}/icons/hicolor/*/apps/*
+%{_iconsdir}/hicolor/*/apps/*
 %{_mandir}/*/*
-%{_sysconfdir}/gconf/schemas/*
-%config(noreplace) %{launchers}/*.desktop
-
 
