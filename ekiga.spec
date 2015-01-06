@@ -24,7 +24,6 @@ BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dbus-glib-1)
-BuildRequires:	pkgconfig(gconf-2.0)
 BuildRequires:	pkgconfig(gnome-doc-utils)
 BuildRequires:	pkgconfig(gnome-icon-theme)
 BuildRequires:	pkgconfig(glib-2.0)
@@ -59,13 +58,14 @@ QTDIR="/usr/lib/qt4" ; export QTDIR ;
 PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
 %endif
 NOCONFIGURE=yes gnome-autogen.sh
-%configure2_5x	\
+%configure	\
 %if %kde_support
 	--enable-kde \
 %endif
 	--disable-schemas-install \
 	--enable-dbus \
-	--disable-gdu
+	--disable-gdu \
+	--disable-gconf
 
 make
 
@@ -97,7 +97,6 @@ EOF
 
 rm -rf %{buildroot}/var/lib/scrollkeeper
 
-%define schemas ekiga
 
 %preun
 if [ -r %{_sysconfdir}/gconf/schemas/gnomemeeting.schemas -a -x %{_bindir}/gconftool-2 ]; then
@@ -115,10 +114,10 @@ fi
 
 %files -f %{name}.lang
 %doc README NEWS FAQ AUTHORS TODO
-%{_sysconfdir}/gconf/schemas/*
 %config(noreplace) %{launchers}/*.desktop
 %{_bindir}/*
 %{_libdir}/%{name}
+%{_sysconfdir}/ekiga/*
 %{_datadir}/dbus-1/services/org.ekiga*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
