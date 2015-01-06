@@ -57,7 +57,6 @@ It used to be called GnomeMeeting
 QTDIR="/usr/lib/qt4" ; export QTDIR ; 
 PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
 %endif
-NOCONFIGURE=yes gnome-autogen.sh
 %configure	\
 %if %kde_support
 	--enable-kde \
