@@ -3,6 +3,8 @@
 %define kde_support 0
 %{?_kde_support: %{expand: %%global kde_support 1}}
 
+%define _disable_rebuild_configure 1
+
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	4.0.1
