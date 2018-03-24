@@ -3,17 +3,17 @@
 %define kde_support 0
 %{?_kde_support: %{expand: %%global kde_support 1}}
 
-%define _disable_rebuild_configure 1
+#define _disable_rebuild_configure 1
 
 Summary:	Voice and Video over IP software (H323 / SIP)
 Name:		ekiga
 Version:	4.0.1
-Release:	14
+Release:	15
 License:	GPLv2+
 Group:		Video
 Url:		http://www.ekiga.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/4.0/%{name}-%{version}.tar.xz
-
+Patch1:		ekiga-4.0.1-libresolv.patch
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnome-common
 BuildRequires:	intltool
@@ -53,12 +53,14 @@ It used to be called GnomeMeeting
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 %if %kde_support
 QTDIR="/usr/lib/qt4" ; export QTDIR ; 
 PATH="/usr/lib/qt4/bin:$PATH" ; export PATH ; 
 %endif
+export CXX="%__cxx -std=gnu++11"
 %configure	\
 %if %kde_support
 	--enable-kde \
