@@ -54,7 +54,7 @@ It used to be called GnomeMeeting
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 %if %kde_support
