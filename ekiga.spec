@@ -11,7 +11,7 @@ Version:	4.0.1
 Release:	17
 License:	GPLv2+
 Group:		Video
-Url:		http://www.ekiga.org
+Url:		https://www.ekiga.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/4.0/%{name}-%{version}.tar.xz
 Patch1:		ekiga-4.0.1-libresolv.patch
 BuildRequires:	desktop-file-utils
