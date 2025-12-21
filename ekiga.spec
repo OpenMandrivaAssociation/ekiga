@@ -14,6 +14,11 @@ Group:		Video
 Url:		https://www.ekiga.org
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ekiga/4.0/%{name}-%{version}.tar.xz
 Patch1:		ekiga-4.0.1-libresolv.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnome-common
 BuildRequires:	intltool
